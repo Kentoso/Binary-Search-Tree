@@ -14,7 +14,8 @@ namespace BSTGraphics.Classes
     {
         public static void DrawTree(Tree tree, Graphics graphics)
         {
-            DrawNode(tree.Root, graphics, (400, 0));
+            graphics.Clear(Color.White);
+            DrawNode(tree.Root, graphics, (400, 100));
             graphics.Dispose();
       
         }

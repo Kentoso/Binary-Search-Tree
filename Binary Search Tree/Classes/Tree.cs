@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -57,6 +58,93 @@ namespace Binary_Search_Tree.Classes
                 {
                     GenerateNode(root.RightChild, values);
                 }
+            }
+        }
+        public void GenerateNode(Node root, int value)
+        {
+            if (value > 0)
+            {
+                if (root.LeftChild == null && value < root.Value)
+                {
+                    root.LeftChild = new Node(value);
+                    root.LeftChild.ParentNode = root;
+                    Nodes.Add(root.LeftChild);
+                }
+                else if (root.LeftChild != null && value < root.Value)
+                {
+                    GenerateNode(root.LeftChild, value);
+                }
+                if (root.RightChild == null && value > root.Value)
+                {
+                    root.RightChild = new Node(value);
+                    root.RightChild.ParentNode = root;
+                    Nodes.Add(root.RightChild);
+                }
+                else if (root.RightChild != null && value > root.Value)
+                {
+                    GenerateNode(root.RightChild, value);
+                }
+            }
+        }
+        public void DeleteNode(int value, ref List<int> values)
+        {
+            Nodes = Nodes.Where(x => x.Value != value).ToList();
+            values = values.Where(x => x != value).ToList();
+            foreach (var node in Nodes)
+            {
+                if (node.RightChild != null)
+                {
+                    if (node.RightChild.Value == value)
+                    {
+                        GenerateNode(Root, values);
+                    }
+                }
+
+                if (node.LeftChild != null)
+                {
+                    if (node.LeftChild.Value == value)
+                    {
+                        GenerateNode(Root, values);
+                    }
+                }
+                
+            }
+            GenerateNode(Root, values);
+        }
+
+        public int SearchNode(Node root,int value)
+        {
+            if (value > root.Value)
+            {
+                if (root.RightChild != null)
+                {
+                    return SearchNode(root.RightChild, value);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else if (value < root.Value)
+            {
+                if (root.LeftChild != null)
+                {
+                    return SearchNode(root.LeftChild, value);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else if (value == root.Value)
+            {
+                Debug.WriteLine($"Found!: {value}");
+                return root.Id;
+            }
+            else
+            {
+                Debug.WriteLine("Haven't found");
+                return -1;
             }
         }
         public void Draw()
