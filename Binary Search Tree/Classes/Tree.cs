@@ -90,6 +90,7 @@ namespace Binary_Search_Tree.Classes
         {
             Nodes = Nodes.Where(x => x.Value != value).ToList();
             values = values.Where(x => x != value).ToList();
+            
             foreach (var node in Nodes)
             {
                 if (node.RightChild != null)
@@ -112,41 +113,81 @@ namespace Binary_Search_Tree.Classes
             GenerateNode(Root, values);
         }
 
-        public int SearchNode(Node root,int value)
+        public string SearchNode(Node root, int value, bool findId = false)
         {
-            if (value > root.Value)
+            if (!findId)
             {
-                if (root.RightChild != null)
+                if (value > root.Value)
                 {
-                    return SearchNode(root.RightChild, value);
+                    if (root.RightChild != null)
+                    {
+                        return "Right " + SearchNode(root.RightChild, value);
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                else if (value < root.Value)
+                {
+                    if (root.LeftChild != null)
+                    {
+                        return "Left " + SearchNode(root.LeftChild, value);
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                else if (value == root.Value)
+                {
+                    Debug.WriteLine($"Found!: {value}");
+                    return "Found";
                 }
                 else
                 {
-                    return -1;
+                    Debug.WriteLine("Haven't found");
+                    return "";
                 }
-            }
-            else if (value < root.Value)
-            {
-                if (root.LeftChild != null)
-                {
-                    return SearchNode(root.LeftChild, value);
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-            else if (value == root.Value)
-            {
-                Debug.WriteLine($"Found!: {value}");
-                return root.Id;
             }
             else
             {
-                Debug.WriteLine("Haven't found");
-                return -1;
+                if (value > root.Value)
+                {
+                    if (root.RightChild != null)
+                    {
+                        return SearchNode(root.RightChild, value);
+                    }
+                    else
+                    {
+                        return "-1";
+                    }
+                }
+                else if (value < root.Value)
+                {
+                    if (root.LeftChild != null)
+                    {
+                        return SearchNode(root.LeftChild, value);
+                    }
+                    else
+                    {
+                        return "-1";
+                    }
+                }
+                else if (value == root.Value)
+                {
+                    Debug.WriteLine($"Found!: {value}");
+                    return root.Id.ToString();
+                }
+                else
+                {
+                    Debug.WriteLine("Haven't found");
+                    return "-1";
+                }
             }
         }
+        
+
         public void Draw()
         {
             foreach (var node in Nodes)

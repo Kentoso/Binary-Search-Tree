@@ -57,5 +57,18 @@ namespace BSTGraphics
                 textBox1.Text = "";
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int num = Convert.ToInt32(textBox3.Text);
+                label1.Text = tree.SearchNode(tree.Root, num);
+            }
+            catch (FormatException)
+            {
+                textBox1.Text = "";
+            }
+        }
     }
 }

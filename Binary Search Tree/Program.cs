@@ -16,8 +16,8 @@ namespace Binary_Search_Tree
             List<int> values = new List<int>() {10, 9, 12, 13, 4, 5, 3, 7, 8, 14, 2, 6, 1};
             Tree tree = new Tree();
             tree.CreateTree(values);
-            int id = tree.SearchNode(tree.Root, 5);
-            Debug.WriteLine(id);
+            string path = tree.SearchNode(tree.Root, 5);
+            Debug.WriteLine(path);
             tree.DeleteNode(12, ref values);
             tree.Draw();
             Console.ReadKey();
